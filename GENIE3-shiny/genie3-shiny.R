@@ -93,10 +93,15 @@ server <- function(input, output, session) {
     expression <- expression()
     gene <- gene()
     
-    regulators <- c(gene[,1])
-    expression <- as.matrix(expression)
-    weightMat <- GENIE3(expression, regulators=regulators)
-    linkList <<- getLinkList(weightMat)
+    if(is.null(expression) | is.null(gene)){
+      warning("Please upload files!")
+    } 
+    else{
+      regulators <- c(gene[,1])
+      expression <- as.matrix(expression)
+      weightMat <- GENIE3(expression, regulators=regulators)
+      linkList <<- getLinkList(weightMat)
+    }
   }, options = list(pageLength = 10))
   
   
